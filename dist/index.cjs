@@ -273,13 +273,13 @@ function isNotEmpty(value) {
     }
 }
 
-var main = {
+var index = {
     debounce, throttle, Numbers, isEmpty, isNotEmpty
 };
 
 exports.Numbers = Numbers;
 exports.debounce = debounce;
-exports.default = main;
+exports.default = index;
 exports.isEmpty = isEmpty;
 exports.isNotEmpty = isNotEmpty;
 exports.throttle = throttle;

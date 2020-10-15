@@ -269,9 +269,9 @@ function isNotEmpty(value) {
     }
 }
 
-var main = {
+var index = {
     debounce, throttle, Numbers, isEmpty, isNotEmpty
 };
 
-export default main;
+export default index;
 export { Numbers, debounce, isEmpty, isNotEmpty, throttle };
