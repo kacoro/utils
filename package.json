@@ -1,14 +1,14 @@
 {
-  "name": "utils",
+  "name": "@kacoro/utils",
   "version": "0.0.1",
   "description": "kacoro utils",
-  "main": "bundle.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "tsc -p tsconfig.test.json && nyc --reporter=lcov --reporter=text --reporter=json ava && rm -rf .nyc_output",
     "build": "rollup -c",
     "dev": "rollup -w",
     "start": "yarn serve",
-    "release":"npm publish"
+    "release":"npm publish --access public"
   },
   "ava": {
     "files": [

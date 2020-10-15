@@ -5,7 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 const options = {
-    input: 'src/main.ts',
+    input: 'src/index.ts',
     output: [{
         file: path.resolve(__dirname, 'dist','index.js'),
         format: 'umd',
