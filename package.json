@@ -8,7 +8,7 @@
     "build": "rollup -c",
     "dev": "rollup -w",
     "start": "yarn serve",
-    "release":"npm publish --access public"
+    "release":"npm publish"
   },
   "ava": {
     "files": [
