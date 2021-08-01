@@ -1,4 +1,4 @@
-var now = Date.now || function() {
+const now = Date.now || function() {
     return new Date().getTime();
   };
 export default now;

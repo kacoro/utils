@@ -1,2 +1,2 @@
-declare var now: () => number;
+declare const now: () => number;
 export default now;

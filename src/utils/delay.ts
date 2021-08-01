@@ -1,12 +1,24 @@
-// Delays a function for the given number of milliseconds, and then calls
+/**
+ * Invokes `func` after `wait` milliseconds. Any additional arguments are
+ * provided to `func` when it's invoked.
+ *
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to delay.
+ * @param {number} wait The number of milliseconds to delay invocation.
+ * @param {...*} [args] The arguments to invoke `func` with.
+ * @returns {number} Returns the timer id.
+ * @example
+ *
+ * delay(text => console.log(text), 1000, 'later')
+ * // => Logs 'later' after one second.
+ */
+ // eslint-disable-next-line @typescript-eslint/ban-types
+ function delay(func: Function, wait: number, ...args: unknown[]): number {
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function')
+  }
+  return setTimeout(func, +wait || 0, ...args)
+}
 
-import restArguments from "./restArguments";
-
-// it with the arguments supplied.
-var delay:Function = restArguments(function(func, wait, args) {
-    return setTimeout(function() {
-      return func.apply(null, args);
-    }, wait);
-  });
-
-  export default delay
+export default delay

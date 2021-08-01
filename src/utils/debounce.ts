@@ -1,44 +1,72 @@
-import restArguments from './restArguments'
-import delay from './delay'
-interface Debounced{
-  cancel?:Function
-}
 /**
- * @description 当返回函数的一系列调用结束时，将触发实参函数。序列的末尾由“wait”参数定义。如果传递了' immediate '，参数函数将在序列的开始而不是结束时被触发。
- * @param func {Function}   实际要执行的函数
- * @param wait {Number}  延迟时间，单位是毫秒（ms）
- * @param immediate {Boolean} 配置回调函数是在一个时间区间的最开始执行（immediate为true），还是最后执行（immediate为false），如果immediate为true，意味着是一个同步的回调，可以传递返回值。
- * @return {Function}     返回一个“防反跳”了的函数
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing. The function also has a property 'clear' 
+ * that is a function which will clear the timer to prevent previously scheduled executions. 
+ *
+ * @source underscore.js
+ * @see http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
+ * @param {Function} function to wrap
+ * @param {Number} timeout in ms (`100`)
+ * @param {Boolean} whether to execute at the beginning (`false`)
+ * @api public
  */
+ function debounce(func, wait, immediate){
+  let timeout, args, context, timestamp, result;
+  if (null == wait) wait = 100;
 
+  function later() {
+    const last = Date.now() - timestamp;
 
-function debounce(func:Function, wait:number = 300, immediate:boolean = false) {
-    let timeout, result;
-  
-    let later = function(context, args) {
+    if (last < wait && last >= 0) {
+      timeout = setTimeout(later, wait - last);
+    } else {
       timeout = null;
-      if (args) result = func.apply(context, args);
-    };
-  
-    let debounced = restArguments(function(args) {
-      if (timeout) clearTimeout(timeout);
-      if (immediate) {
-        let callNow = !timeout;
-        timeout = setTimeout(later, wait);
-        if (callNow) result = func.apply(this, args);
-      } else {
-        timeout = delay(later, wait, this, args);
+      if (!immediate) {
+        result = func.apply(context, args);
+        context = args = null;
       }
-      return result;
-    });
-  
-    (debounced as Debounced).cancel = function() {
-      clearTimeout(timeout);
-      timeout = null;
-    };
-  
-    return debounced;
+    }
   }
 
+  const debounced = function(){
+    context = this;
+    // eslint-disable-next-line prefer-rest-params
+    args = arguments;
+    timestamp = Date.now();
+    const callNow = immediate && !timeout;
+    if (!timeout) timeout = setTimeout(later, wait);
+    if (callNow) {
+      result = func.apply(context, args);
+      context = args = null;
+    }
 
-  export default debounce;
+    return result;
+  };
+
+  debounced.clear = function() {
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  };
+  
+  debounced.flush = function() {
+    if (timeout) {
+      result = func.apply(context, args);
+      context = args = null;
+      
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  };
+
+  return debounced;
+}
+
+// Adds compatibility for ES modules
+debounce.debounce = debounce;
+
+
+export default debounce

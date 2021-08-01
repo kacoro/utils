@@ -1,9 +1,23 @@
 /**
- * @description 当返回函数的一系列调用结束时，将触发实参函数。序列的末尾由“wait”参数定义。如果传递了' immediate '，参数函数将在序列的开始而不是结束时被触发。
- * @param func {Function}   实际要执行的函数
- * @param wait {Number}  延迟时间，单位是毫秒（ms）
- * @param immediate {Boolean} 配置回调函数是在一个时间区间的最开始执行（immediate为true），还是最后执行（immediate为false），如果immediate为true，意味着是一个同步的回调，可以传递返回值。
- * @return {Function}     返回一个“防反跳”了的函数
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing. The function also has a property 'clear'
+ * that is a function which will clear the timer to prevent previously scheduled executions.
+ *
+ * @source underscore.js
+ * @see http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
+ * @param {Function} function to wrap
+ * @param {Number} timeout in ms (`100`)
+ * @param {Boolean} whether to execute at the beginning (`false`)
+ * @api public
  */
-declare function debounce(func: Function, wait?: number, immediate?: boolean): () => any;
+declare function debounce(func: any, wait: any, immediate: any): {
+    (): any;
+    clear(): void;
+    flush(): void;
+};
+declare namespace debounce {
+    var debounce: typeof import("./debounce").default;
+}
 export default debounce;

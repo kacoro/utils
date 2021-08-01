@@ -15,12 +15,14 @@ interface Options {
   leading?:boolean,
   trailing?:boolean
 }
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/ban-types
 function throttle(func:Function, wait:number, options?:Options) {
-    var timeout, context, args, result;
-    var previous = 0;
+    let timeout: NodeJS.Timeout, context: any, args: IArguments, result: any;
+    let previous = 0;
     if (!options) options = {};
   
-    var later = function() {
+    const later = function() {
       previous = options.leading === false ? 0 : now();
       timeout = null;
       result = func.apply(context, args);
@@ -28,11 +30,12 @@ function throttle(func:Function, wait:number, options?:Options) {
     };
   
   
-    var throttled = function() {
-      var _now = now();
+    const throttled = function() {
+      const _now = now();
       if (!previous && options.leading === false) previous = _now;
-      var remaining = wait - (_now - previous);
+      const remaining = wait - (_now - previous);
       context = this;
+      // eslint-disable-next-line prefer-rest-params
       args = arguments;
       if (remaining <= 0 || remaining > wait) {
         if (timeout) {

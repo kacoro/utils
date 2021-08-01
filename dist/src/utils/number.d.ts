@@ -42,7 +42,7 @@ declare function round(num: numType, ratio: number): number;
  * 是否进行边界检查，默认开启
  * @param flag 标记开关，true 为开启，false 为关闭，默认为 true
  */
-declare function enableBoundaryChecking(flag?: boolean): void;
+declare function enableBoundaryChecking(flag?: boolean): boolean;
 export { strip, plus, minus, times, divide, round, digitLength, float2Fixed, enableBoundaryChecking };
 declare const _default: {
     strip: typeof strip;

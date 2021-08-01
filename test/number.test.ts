@@ -1,5 +1,5 @@
 import test from 'ava';
-import NP from '../src/dom/numbers';
+import NP from '../src/utils/number';
 
 test('NP.strip can eliminate rounding errors', (t) => {
   t.true(NP.strip(0.09999999999999998) === 0.1);

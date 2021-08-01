@@ -114,8 +114,9 @@ let _boundaryCheckingState = true;
  * 是否进行边界检查，默认开启
  * @param flag 标记开关，true 为开启，false 为关闭，默认为 true
  */
-function enableBoundaryChecking(flag = true) {
+function enableBoundaryChecking(flag = true):boolean {
   _boundaryCheckingState = flag;
+  return _boundaryCheckingState
 }
 export { strip, plus, minus, times, divide, round, digitLength, float2Fixed, enableBoundaryChecking };
 export default {
